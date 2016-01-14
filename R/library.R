@@ -16,9 +16,6 @@
 #' @name ensure_package_exists_in_lockbox
 `ensure_package_exists_in_lockbox!` <- function(locked_package) {
   if (is.local_package(locked_package) && exists_in_lockbox(locked_package)) {
-    message(crayon::yellow(
-      paste0("Removing pre-existing local installation of ",
-        locked_package$name, "@", locked_package$version)))
     `remove_from_lockbox!`(locked_package)
   }
   if (!exists_in_lockbox(locked_package)) {
@@ -35,7 +32,9 @@ exists_in_lockbox <- function(locked_package) {
 }
 
 `remove_from_lockbox!` <- function(locked_package) {
-  file.remove(lockbox_package_path(locked_package))
+  message(crayon::yellow(paste0("Removing pre-existing local installation of ",
+    locked_package$name, "@", locked_package$version)))
+  unlink(lockbox_package_path(locked_package), recursive = TRUE, force = TRUE)
 }
 
 lockbox_package_path <- function(locked_package, library = lockbox_library()) {
@@ -56,8 +55,8 @@ lockbox_package_path <- function(locked_package, library = lockbox_library()) {
 }
 
 install_package <- function(locked_package) {
-  message("Installing", crayon::green(locked_package$name),
-      as.character(locked_package$version), "from", class(locked_package)[1], "\n")
+  message("Installing ", crayon::green(locked_package$name), " ",
+      as.character(locked_package$version), " from ", class(locked_package)[1], "\n")
   UseMethod("install_package")
 }
 

@@ -59,7 +59,7 @@ is.symlink <- function(path) {
 }
 
 quietly <- function(expr) {
-  suppressPackageStartupMessages(suppressMessages(suppressWarnings(expr)))
+  suppressPackageStartupMessages(suppressWarnings(expr))
 }
 
 package_version_from_path <- function(pkg_path) {
