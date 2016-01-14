@@ -1,3 +1,7 @@
+# Version 0.1.13
+
+  * Dev mode. NEWS TBD.
+
 # Version 0.1.12
 
   * Use a path for the staging library that is always available
