@@ -100,5 +100,3 @@ sanitize_transient_library <- function(...) {
     options(.lockbox_env$old_opts)
   }
 }
-
-

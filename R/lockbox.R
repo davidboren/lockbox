@@ -44,15 +44,17 @@ lockbox.list <- function(lock, env) {
   set_transient_library()
 
   ## Find the packages whose version does not match the current library.
+  local_packages <- vapply(lock, is.local_package, logical(1))
   mismatches <- vapply(lock, version_mismatch, logical(1))
+  reload_these_packages <- unlist(Map(any, mismatches, local_packages))
 
-  sapply(lock[!mismatches], function(locked_package) {
+  sapply(lock[!reload_these_packages], function(locked_package) {
     cat('Using', crayon::green(locked_package$name), as.character(locked_package$version), '\n')
   })
 
   quietly({
     ## Replace our library so that it has these packages instead.
-    align(lock[mismatches])
+    align(lock[reload_these_packages])
 
     ## And re-build our search path.
     rebuild(lock)
