@@ -1,6 +1,9 @@
 # Version 0.1.13
 
-  * Dev mode. NEWS TBD.
+  * Adds an option for `autoinstall: true` for quick development on local packages.
+  * Fixed the dependencies in the DESCRIPTION.
+  * Fixed the accidental suppression of package installation messages.
+  * Fixed typos in the announcements of packages being installed.
 
 # Version 0.1.12
 
