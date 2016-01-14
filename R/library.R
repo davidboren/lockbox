@@ -15,7 +15,7 @@
 #'    does not exist.
 #' @name ensure_package_exists_in_lockbox
 `ensure_package_exists_in_lockbox!` <- function(locked_package) {
-  if (is.local_package(locked_package) && exists_in_lockbox(locked_package)) {
+  if (should_remove_local(locked_package) && exists_in_lockbox(locked_package)) {
     `remove_from_lockbox!`(locked_package)
   }
   if (!exists_in_lockbox(locked_package)) {
@@ -25,6 +25,10 @@
 
 is.local_package <- function(locked_package) {
   identical(locked_package$remote, "local")
+}
+
+should_remove_local <- function(locked_package) {
+  is.local_package(locked_package) && isTRUE(locked_package$autoinstall)
 }
 
 exists_in_lockbox <- function(locked_package) {
